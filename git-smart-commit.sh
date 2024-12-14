@@ -19,6 +19,48 @@ show_changed_files() {
     git diff --name-only
 }
 
+# Function to push changes
+push_changes() {
+    echo -e "${BLUE}Pushing changes to remote...${NC}"
+    
+    # Get current branch
+    current_branch=$(git branch --show-current)
+    
+    echo -e "Current branch: ${GREEN}$current_branch${NC}"
+    echo -e "${YELLOW}Select push option:${NC}"
+    echo "1) Push to origin/$current_branch"
+    echo "2) Push to a different remote/branch"
+    echo "3) Cancel"
+    read -p "Choose an option: " push_choice
+    
+    case $push_choice in
+        1)
+            echo -e "${BLUE}Pushing to origin/$current_branch...${NC}"
+            if git push origin $current_branch; then
+                echo -e "${GREEN}Successfully pushed to origin/$current_branch${NC}"
+            else
+                echo -e "${RED}Failed to push to origin/$current_branch${NC}"
+            fi
+            ;;
+        2)
+            read -p "Enter remote name [origin]: " remote_name
+            remote_name=${remote_name:-origin}
+            read -p "Enter branch name [$current_branch]: " branch_name
+            branch_name=${branch_name:-$current_branch}
+            
+            echo -e "${BLUE}Pushing to $remote_name/$branch_name...${NC}"
+            if git push $remote_name $branch_name; then
+                echo -e "${GREEN}Successfully pushed to $remote_name/$branch_name${NC}"
+            else
+                echo -e "${RED}Failed to push to $remote_name/$branch_name${NC}"
+            fi
+            ;;
+        *)
+            echo -e "${YELLOW}Push cancelled${NC}"
+            ;;
+    esac
+}
+
 # Function to analyze file changes and generate description
 analyze_changes() {
     local files_changed=$(git diff --name-only)
@@ -238,7 +280,8 @@ show_menu() {
     echo -e "3) Show detailed changes"
     echo -e "4) Stage all changes and commit"
     echo -e "5) Stage specific files and commit"
-    echo -e "6) Exit"
+    echo -e "6) Push changes"
+    echo -e "7) Exit"
     echo -e "${GREEN}Choose an option:${NC}"
 }
 
@@ -269,6 +312,9 @@ while true; do
             generate_commit_template
             ;;
         6)
+            push_changes
+            ;;
+        7)
             echo -e "${BLUE}Goodbye!${NC}"
             exit 0
             ;;
