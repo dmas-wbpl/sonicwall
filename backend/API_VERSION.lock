@@ -1,0 +1,27 @@
+VERSION=1.0.0
+STATUS=stable
+LAST_VALIDATED=2024-01-13
+ENDPOINTS=6
+SCHEMAS=6
+TESTS=2
+
+# DO NOT MODIFY THIS FILE
+# This file tracks the current stable version of the backend API.
+# The frontend development should use this version as a reference.
+# Any changes to the API should result in a version bump.
+
+# Endpoint Count:
+# 1. GET /api/v1/security/services/status
+# 2. GET /api/v1/security/gateway-av/status
+# 3. GET /api/v1/security/ips/status
+# 4. GET /api/v1/security/botnet/status
+# 5. GET /api/v1/security/anti-spyware/status
+# 6. GET /api/v1/security/content-filtering/status
+
+# Schema Count:
+# 1. SecurityServicesStatus
+# 2. GatewayAntiVirusStatus
+# 3. IntrusionPreventionStatus
+# 4. BotnetStatus
+# 5. AntiSpywareStatus
+# 6. ContentFilteringStatus 

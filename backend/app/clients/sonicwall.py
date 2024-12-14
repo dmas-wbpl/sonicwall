@@ -166,16 +166,86 @@ class SonicWallClient:
             return False
 
     async def get_security_services_status(self) -> Optional[Dict]:
-        """Get the status of security services."""
+        """
+        Get the status of security services.
+        """
         try:
             response = self.session.get(
                 f"{self.base_url}/api/sonicos/reporting/status/security-services",
                 headers=self._auth_headers
             )
             response.raise_for_status()
+            
+            print(f"Security Services Response: {response.text}")  # Debug logging
+            
+            # For this endpoint, the response is directly the data we want
             return response.json()
-        except Exception as e:
+            
+        except requests.exceptions.RequestException as e:
             print(f"Error getting security services status: {str(e)}")
+            return None
+        except Exception as e:
+            print(f"Unexpected error getting security services status: {str(e)}")
+            return None
+
+    async def get_gateway_av_status(self) -> Optional[Dict]:
+        """
+        Get Gateway Anti-Virus status.
+        """
+        try:
+            response = self.session.get(
+                f"{self.base_url}/api/sonicos/reporting/gateway-antivirus",
+                headers=self._auth_headers
+            )
+            response.raise_for_status()
+            
+            print(f"Gateway AV Response: {response.text}")  # Debug logging
+            
+            # Return the response directly as it contains the data we want
+            return response.json()
+            
+        except Exception as e:
+            print(f"Error getting Gateway AV status: {str(e)}")
+            return None
+
+    async def get_intrusion_prevention_status(self) -> Optional[Dict]:
+        """
+        Get Intrusion Prevention status.
+        """
+        try:
+            response = self.session.get(
+                f"{self.base_url}/api/sonicos/reporting/intrusion-prevention",
+                headers=self._auth_headers
+            )
+            response.raise_for_status()
+            
+            print(f"IPS Response: {response.text}")  # Debug logging
+            
+            # Return the response directly as it contains the data we want
+            return response.json()
+            
+        except Exception as e:
+            print(f"Error getting Intrusion Prevention status: {str(e)}")
+            return None
+
+    async def get_botnet_status(self) -> Optional[Dict]:
+        """
+        Get Botnet Filter status.
+        """
+        try:
+            response = self.session.get(
+                f"{self.base_url}/api/sonicos/reporting/botnet/status",
+                headers=self._auth_headers
+            )
+            response.raise_for_status()
+            
+            print(f"Botnet Response: {response.text}")  # Debug logging
+            
+            # Return the response directly as it contains the data we want
+            return response.json()
+            
+        except Exception as e:
+            print(f"Error getting Botnet status: {str(e)}")
             return None
 
     async def close_session(self) -> bool:
@@ -188,4 +258,60 @@ class SonicWallClient:
             return response.status_code == 200
         except Exception as e:
             print(f"Error closing session: {str(e)}")
-            return False 
+            return False
+
+    async def get_anti_spyware_status(self) -> Optional[Dict]:
+        """
+        Get Anti-Spyware status.
+        """
+        try:
+            response = self.session.get(
+                f"{self.base_url}/api/sonicos/reporting/anti-spyware",
+                headers=self._auth_headers
+            )
+            response.raise_for_status()
+            
+            print(f"Anti-Spyware Response: {response.text}")  # Debug logging
+            
+            # Return the response directly as it contains the data we want
+            return response.json()
+            
+        except Exception as e:
+            print(f"Error getting Anti-Spyware status: {str(e)}")
+            return None
+
+    async def get_content_filtering_status(self) -> Optional[Dict]:
+        """
+        Get Content Filtering status.
+        """
+        # List of possible endpoints to try
+        endpoints = [
+            "/api/sonicos/content-filtering/status",
+            "/api/sonicos/reporting/content-filtering",
+            "/api/sonicos/cfs/status",
+            "/api/sonicos/security-services/content-filtering"
+        ]
+
+        for endpoint in endpoints:
+            try:
+                print(f"Trying endpoint: {endpoint}")
+                response = self.session.get(
+                    f"{self.base_url}{endpoint}",
+                    headers=self._auth_headers
+                )
+                response.raise_for_status()
+                
+                print(f"Content Filtering Response: {response.text}")  # Debug logging
+                
+                # Return the response directly as it contains the data we want
+                return response.json()
+                
+            except requests.exceptions.RequestException as e:
+                print(f"Error with endpoint {endpoint}: {str(e)}")
+                continue
+            except Exception as e:
+                print(f"Unexpected error with endpoint {endpoint}: {str(e)}")
+                continue
+        
+        print("All content filtering endpoints failed")
+        return None 

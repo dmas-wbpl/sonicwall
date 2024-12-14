@@ -1,0 +1,641 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SonicWall Management API",
+    "description": "API for managing SonicWall security appliances",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root_api_v1__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Login",
+        "description": "Authenticate with the SonicWall device and start a management session.\n\nReturns:\n    dict: Authentication success message\n    \nRaises:\n    HTTPException: If authentication fails",
+        "operationId": "login_api_v1_auth_login_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "delete": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Logout",
+        "description": "End the current management session.\n\nReturns:\n    dict: Logout success message\n    \nRaises:\n    HTTPException: If session termination fails",
+        "operationId": "logout_api_v1_auth_logout_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/services/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Security Services Status",
+        "description": "Get the status of all security services.\n\nReturns:\n    SecurityServicesStatus: Detailed status of all security services including licensing information\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_security_services_status_api_v1_security_services_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityServicesStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/gateway-av/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Gateway Av Status",
+        "description": "Get Gateway Anti-Virus status.\n\nReturns:\n    GatewayAntiVirusStatus: Current status of Gateway Anti-Virus service including database and license information\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_gateway_av_status_api_v1_security_gateway_av_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GatewayAntiVirusStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/ips/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Intrusion Prevention Status",
+        "description": "Get Intrusion Prevention status.\n\nReturns:\n    IntrusionPreventionStatus: Current status of IPS including database and license information\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_intrusion_prevention_status_api_v1_security_ips_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntrusionPreventionStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/botnet/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Botnet Status",
+        "description": "Get Botnet Filter status.\n\nReturns:\n    BotnetStatus: Current status of Botnet Filter including database information\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_botnet_status_api_v1_security_botnet_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotnetStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/anti-spyware/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Anti Spyware Status",
+        "description": "Get Anti-Spyware status.\n\nReturns:\n    AntiSpywareStatus: Current status of Anti-Spyware service including database, \n    license information, and threat statistics\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_anti_spyware_status_api_v1_security_anti_spyware_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AntiSpywareStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/security/content-filtering/status": {
+      "get": {
+        "tags": [
+          "security"
+        ],
+        "summary": "Get Content Filtering Status",
+        "description": "Get Content Filtering status.\n\nReturns:\n    ContentFilteringStatus: Current status of Content Filtering service including database,\n    license information, and category statistics\n\nRaises:\n    HTTPException: If there's an error fetching the status",
+        "operationId": "get_content_filtering_status_api_v1_security_content_filtering_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentFilteringStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AntiSpywareStatus": {
+        "properties": {
+          "signature_database": {
+            "type": "string",
+            "title": "Signature Database",
+            "description": "Status of signature database"
+          },
+          "signature_database_timestamp": {
+            "type": "string",
+            "title": "Signature Database Timestamp",
+            "description": "Last update timestamp of signature database"
+          },
+          "last_checked": {
+            "type": "string",
+            "title": "Last Checked",
+            "description": "Last check timestamp"
+          },
+          "anti_spyware_expiration_date": {
+            "type": "string",
+            "title": "Anti Spyware Expiration Date",
+            "description": "Service expiration date"
+          },
+          "active_signatures": {
+            "type": "integer",
+            "title": "Active Signatures",
+            "description": "Number of active signatures"
+          },
+          "blocked_today": {
+            "type": "integer",
+            "title": "Blocked Today",
+            "description": "Number of threats blocked today"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature_database",
+          "signature_database_timestamp",
+          "last_checked",
+          "anti_spyware_expiration_date",
+          "active_signatures",
+          "blocked_today"
+        ],
+        "title": "AntiSpywareStatus",
+        "description": "Anti-Spyware status information",
+        "example": {
+          "active_signatures": 12500,
+          "anti_spyware_expiration_date": "UTC 04/05/2026 00:00:00.000",
+          "blocked_today": 42,
+          "last_checked": "12/13/2024 16:29:02.864",
+          "signature_database": "Downloaded",
+          "signature_database_timestamp": "UTC 12/12/2024 15:02:28.000"
+        }
+      },
+      "BotnetStatus": {
+        "properties": {
+          "botnet_database": {
+            "type": "string",
+            "title": "Botnet Database",
+            "description": "Status of botnet database"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Status message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "botnet_database",
+          "message"
+        ],
+        "title": "BotnetStatus",
+        "description": "Botnet Filter status information",
+        "example": {
+          "botnet_database": "Downloaded",
+          "message": "Botnet Filter Available"
+        }
+      },
+      "ContentFilteringCategory": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "Category ID"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Category name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Category status (Allowed/Blocked)"
+          },
+          "hits_today": {
+            "type": "integer",
+            "title": "Hits Today",
+            "description": "Number of hits today"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "status",
+          "hits_today"
+        ],
+        "title": "ContentFilteringCategory",
+        "description": "Content Filtering category information"
+      },
+      "ContentFilteringStatus": {
+        "properties": {
+          "database_version": {
+            "type": "string",
+            "title": "Database Version",
+            "description": "Content filtering database version"
+          },
+          "last_updated": {
+            "type": "string",
+            "title": "Last Updated",
+            "description": "Last database update timestamp"
+          },
+          "expiration_date": {
+            "type": "string",
+            "title": "Expiration Date",
+            "description": "Service expiration date"
+          },
+          "total_requests_today": {
+            "type": "integer",
+            "title": "Total Requests Today",
+            "description": "Total requests processed today"
+          },
+          "total_blocked_today": {
+            "type": "integer",
+            "title": "Total Blocked Today",
+            "description": "Total requests blocked today"
+          },
+          "categories": {
+            "items": {
+              "$ref": "#/components/schemas/ContentFilteringCategory"
+            },
+            "type": "array",
+            "title": "Categories",
+            "description": "List of content filtering categories"
+          }
+        },
+        "type": "object",
+        "required": [
+          "database_version",
+          "last_updated",
+          "expiration_date",
+          "total_requests_today",
+          "total_blocked_today",
+          "categories"
+        ],
+        "title": "ContentFilteringStatus",
+        "description": "Content Filtering status information",
+        "example": {
+          "categories": [
+            {
+              "hits_today": 25,
+              "id": 1,
+              "name": "Adult Content",
+              "status": "Blocked"
+            },
+            {
+              "hits_today": 1250,
+              "id": 2,
+              "name": "Business",
+              "status": "Allowed"
+            }
+          ],
+          "database_version": "20240112",
+          "expiration_date": "UTC 04/05/2026 00:00:00.000",
+          "last_updated": "UTC 12/12/2024 15:02:28.000",
+          "total_blocked_today": 150,
+          "total_requests_today": 15000
+        }
+      },
+      "GatewayAntiVirusStatus": {
+        "properties": {
+          "signature_database": {
+            "type": "string",
+            "title": "Signature Database",
+            "description": "Status of signature database"
+          },
+          "signature_database_timestamp": {
+            "type": "string",
+            "title": "Signature Database Timestamp",
+            "description": "Last update timestamp of signature database"
+          },
+          "last_checked": {
+            "type": "string",
+            "title": "Last Checked",
+            "description": "Last check timestamp"
+          },
+          "gateway_anti_virus_expiration_date": {
+            "type": "string",
+            "title": "Gateway Anti Virus Expiration Date",
+            "description": "License expiration date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature_database",
+          "signature_database_timestamp",
+          "last_checked",
+          "gateway_anti_virus_expiration_date"
+        ],
+        "title": "GatewayAntiVirusStatus",
+        "description": "Gateway Anti-Virus status information",
+        "example": {
+          "gateway_anti_virus_expiration_date": "UTC 04/05/2026 00:00:00.000",
+          "last_checked": "12/13/2024 16:29:02.864",
+          "signature_database": "Downloaded",
+          "signature_database_timestamp": "UTC 12/12/2024 15:02:28.000"
+        }
+      },
+      "IntrusionPreventionStatus": {
+        "properties": {
+          "signature_database": {
+            "type": "string",
+            "title": "Signature Database",
+            "description": "Status of signature database"
+          },
+          "signature_database_timestamp": {
+            "type": "string",
+            "title": "Signature Database Timestamp",
+            "description": "Last update timestamp of signature database"
+          },
+          "last_checked": {
+            "type": "string",
+            "title": "Last Checked",
+            "description": "Last check timestamp"
+          },
+          "ips_service_expiration_date": {
+            "type": "string",
+            "title": "Ips Service Expiration Date",
+            "description": "Service expiration date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "signature_database",
+          "signature_database_timestamp",
+          "last_checked",
+          "ips_service_expiration_date"
+        ],
+        "title": "IntrusionPreventionStatus",
+        "description": "Intrusion Prevention status information",
+        "example": {
+          "ips_service_expiration_date": "UTC 04/05/2026 00:00:00.000",
+          "last_checked": "12/13/2024 16:29:02.864",
+          "signature_database": "Downloaded",
+          "signature_database_timestamp": "UTC 12/12/2024 14:53:13.000"
+        }
+      },
+      "SecurityServicesStatus": {
+        "properties": {
+          "nodes_users": {
+            "type": "string",
+            "title": "Nodes Users",
+            "description": "Node licensing status"
+          },
+          "ssl_vpn_nodes_users": {
+            "type": "string",
+            "title": "Ssl Vpn Nodes Users",
+            "description": "SSL VPN nodes status"
+          },
+          "virtual_assist_nodes_users": {
+            "type": "string",
+            "title": "Virtual Assist Nodes Users",
+            "description": "Virtual Assist nodes status"
+          },
+          "vpn": {
+            "type": "string",
+            "title": "Vpn",
+            "description": "VPN licensing status"
+          },
+          "global_vpn_client": {
+            "type": "string",
+            "title": "Global Vpn Client",
+            "description": "Global VPN client status"
+          },
+          "cfs_content_filter_": {
+            "type": "string",
+            "title": "Cfs Content Filter ",
+            "description": "Content filter status"
+          },
+          "expanded_feature_set": {
+            "type": "string",
+            "title": "Expanded Feature Set",
+            "description": "Expanded feature set status"
+          },
+          "endpoint_security": {
+            "type": "string",
+            "title": "Endpoint Security",
+            "description": "Endpoint security status"
+          },
+          "gateway_anti_virus": {
+            "type": "string",
+            "title": "Gateway Anti Virus",
+            "description": "Gateway anti-virus status"
+          },
+          "capture_atp": {
+            "type": "string",
+            "title": "Capture Atp",
+            "description": "Capture ATP status"
+          },
+          "anti_spyware": {
+            "type": "string",
+            "title": "Anti Spyware",
+            "description": "Anti-spyware status"
+          },
+          "intrusion_prevention": {
+            "type": "string",
+            "title": "Intrusion Prevention",
+            "description": "Intrusion prevention status"
+          },
+          "app_control": {
+            "type": "string",
+            "title": "App Control",
+            "description": "Application control status"
+          },
+          "app_visualization": {
+            "type": "string",
+            "title": "App Visualization",
+            "description": "Application visualization status"
+          },
+          "anti_spam": {
+            "type": "string",
+            "title": "Anti Spam",
+            "description": "Anti-spam status"
+          },
+          "analyzer": {
+            "type": "string",
+            "title": "Analyzer",
+            "description": "Analyzer status"
+          },
+          "dpi_ssl": {
+            "type": "string",
+            "title": "Dpi Ssl",
+            "description": "DPI-SSL status"
+          },
+          "dpi_ssh": {
+            "type": "string",
+            "title": "Dpi Ssh",
+            "description": "DPI-SSH status"
+          },
+          "wan_acceleration": {
+            "type": "string",
+            "title": "Wan Acceleration",
+            "description": "WAN acceleration status"
+          },
+          "wxac_acceleration": {
+            "type": "string",
+            "title": "Wxac Acceleration",
+            "description": "WXAC acceleration status"
+          },
+          "botnet": {
+            "type": "string",
+            "title": "Botnet",
+            "description": "Botnet filter status"
+          },
+          "dns_filtering": {
+            "type": "string",
+            "title": "Dns Filtering",
+            "description": "DNS filtering status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nodes_users",
+          "ssl_vpn_nodes_users",
+          "virtual_assist_nodes_users",
+          "vpn",
+          "global_vpn_client",
+          "cfs_content_filter_",
+          "expanded_feature_set",
+          "endpoint_security",
+          "gateway_anti_virus",
+          "capture_atp",
+          "anti_spyware",
+          "intrusion_prevention",
+          "app_control",
+          "app_visualization",
+          "anti_spam",
+          "analyzer",
+          "dpi_ssl",
+          "dpi_ssh",
+          "wan_acceleration",
+          "wxac_acceleration",
+          "botnet",
+          "dns_filtering"
+        ],
+        "title": "SecurityServicesStatus",
+        "description": "Security services licensing status",
+        "example": {
+          "analyzer": "Not Licensed",
+          "anti_spam": "Licensed",
+          "anti_spyware": "Licensed",
+          "app_control": "Licensed",
+          "app_visualization": "Licensed",
+          "botnet": "Licensed",
+          "capture_atp": "Licensed",
+          "cfs_content_filter_": "Licensed",
+          "dns_filtering": "Licensed",
+          "dpi_ssh": "Licensed",
+          "dpi_ssl": "Licensed - Client/Server",
+          "endpoint_security": "Not Licensed",
+          "expanded_feature_set": "Not Licensed",
+          "gateway_anti_virus": "Licensed",
+          "global_vpn_client": "Licensed - 10 Licenses(1 in use)",
+          "intrusion_prevention": "Licensed",
+          "nodes_users": "Licensed - Unlimited Nodes",
+          "ssl_vpn_nodes_users": "Licensed - 12 Nodes(0 in use)",
+          "virtual_assist_nodes_users": "Licensed - 0 Nodes(0 in use)",
+          "vpn": "Licensed",
+          "wan_acceleration": "Not Licensed",
+          "wxac_acceleration": "Licensed"
+        }
+      }
+    }
+  }
+}
